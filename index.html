@@ -6,62 +6,90 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Invicta Imperium is a Roman-inspired sandbox MUD focused on player-driven systems, consequence, and in-character play." />
 
-  <!-- Roman-feeling serif. If Google Fonts fails, it falls back to local serif. -->
+  <!-- Marble + Imperial serif fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Marcellus&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#07070a;
-      --bg1:#0b0d12;
-      --stone:#121423;
-      --ink:#e9e3d2;       /* parchment-ish text */
-      --muted:#c1b89f;
-      --gold:#d6b15e;
-      --gold2:#f3d48a;
-      --maroon:#5b1010;
-      --maroon2:#2a0b0b;
-      --line:rgba(214,177,94,.25);
-      --shadow:rgba(0,0,0,.55);
+      /* Marble + Gold imperial palette */
+      --bg:#f6f2e7;
+      --marbleA:#fbf8f0;
+      --marbleB:#f2edde;
+      --ink:#1c1a16;
+      --muted:#4b463d;
+      --gold:#b08a2a;
+      --gold2:#d6b45a;
+      --wine:#5a1420;
+      --line:rgba(176,138,42,.28);
+      --shadow:rgba(15,12,8,.18);
+      --card:rgba(255,255,255,.72);
+      --glass:rgba(255,255,255,.50);
     }
 
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
       color:var(--ink);
+      font-family:"Crimson Text", Georgia, "Times New Roman", serif;
+      line-height:1.65;
       background:
-        radial-gradient(1000px 700px at 20% 0%, rgba(91,16,16,.35), transparent 55%),
-        radial-gradient(900px 650px at 80% 10%, rgba(214,177,94,.18), transparent 55%),
-        radial-gradient(1200px 900px at 50% 120%, rgba(18,20,35,.85), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 55%, var(--bg0));
-      font-family: Marcellus, Georgia, "Times New Roman", serif;
-      line-height:1.6;
+        radial-gradient(900px 600px at 20% -10%, rgba(176,138,42,.14), transparent 60%),
+        radial-gradient(900px 600px at 80% 0%, rgba(90,20,32,.10), transparent 55%),
+        linear-gradient(180deg, var(--marbleA), var(--bg) 35%, var(--marbleB));
     }
 
-    a{color:var(--gold2);text-decoration:none}
+    /* Fake “marble veins” without external images */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.55;
+      background:
+        repeating-linear-gradient(115deg,
+          rgba(0,0,0,.035) 0px,
+          rgba(0,0,0,.030) 2px,
+          rgba(255,255,255,.00) 14px,
+          rgba(255,255,255,.00) 42px),
+        repeating-linear-gradient(32deg,
+          rgba(90,20,32,.035) 0px,
+          rgba(90,20,32,.030) 3px,
+          rgba(255,255,255,.00) 16px,
+          rgba(255,255,255,.00) 48px);
+      mix-blend-mode:multiply;
+    }
+
+    a{color:var(--wine);text-decoration:none}
     a:hover{text-decoration:underline}
 
-    .wrap{max-width:1050px;margin:0 auto;padding:18px}
+    .wrap{max-width:1120px;margin:0 auto;padding:18px}
 
     /* Top bar */
     .topbar{
       position:sticky;top:0;z-index:10;
-      background:rgba(7,7,10,.72);
+      background:rgba(250,247,238,.74);
       backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(255,255,255,.06);
+      border-bottom:1px solid rgba(0,0,0,.08);
     }
     .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .brand{display:flex;align-items:center;gap:12px}
     .sigil{
-      width:38px;height:38px;border-radius:10px;
-      background:linear-gradient(135deg, rgba(214,177,94,.9), rgba(91,16,16,.85));
-      box-shadow:0 12px 28px rgba(0,0,0,.35);
+      width:42px;height:42px;border-radius:12px;
+      background:linear-gradient(135deg, var(--gold2), var(--gold));
+      box-shadow:0 14px 30px var(--shadow);
       display:grid;place-items:center;
-      font-family:Cinzel, serif;font-weight:900;color:#120c07;
+      font-family:Cinzel, serif;font-weight:900;color:#2a1d06;
+      border:1px solid rgba(0,0,0,.08);
     }
-    .brand-title{font-family:Cinzel, serif;font-weight:900;letter-spacing:.06em}
-    .brand-sub{font-size:13px;color:var(--muted);opacity:.95}
+    .brand-title{
+      font-family:Cinzel, serif;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .brand-sub{font-size:13px;color:var(--muted)}
 
     .nav{display:flex;gap:14px;flex-wrap:wrap}
     .nav a{color:var(--muted);font-size:14px}
@@ -69,64 +97,70 @@
 
     /* Hero */
     .hero{
-      padding:32px 18px 26px;
+      padding:28px 18px 12px;
     }
     .hero-grid{
       display:grid;
-      grid-template-columns:1.2fr .9fr;
+      grid-template-columns:1.25fr .85fr;
       gap:18px;
       align-items:start;
     }
-    .hero h1{
+    h1{
       margin:0 0 10px;
       font-family:Cinzel, serif;
+      font-weight:900;
       font-size:46px;
-      line-height:1.05;
-      letter-spacing:.04em;
+      line-height:1.06;
+      letter-spacing:.05em;
       text-transform:uppercase;
+      color:#17130c;
+      text-shadow:0 1px 0 rgba(255,255,255,.45);
     }
     .lead{
       margin:0;
       color:var(--muted);
-      max-width:65ch;
-      font-size:16px;
+      max-width:70ch;
+      font-size:17px;
     }
 
-    .cta{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 10px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 12px}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;
       padding:12px 14px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
+      border:1px solid rgba(0,0,0,.10);
+      background:var(--glass);
       color:var(--ink);
       font-weight:700;
-      box-shadow:0 12px 26px rgba(0,0,0,.25);
+      box-shadow:0 14px 28px var(--shadow);
     }
-    .btn:hover{border-color:rgba(214,177,94,.35)}
+    .btn:hover{border-color:rgba(176,138,42,.35)}
     .btn.primary{
-      background:linear-gradient(135deg, rgba(214,177,94,.95), rgba(91,16,16,.92));
-      border-color:transparent;
-      color:#150b06;
+      background:linear-gradient(135deg, var(--gold2), var(--gold));
+      border-color:rgba(0,0,0,.08);
+      color:#2a1d06;
     }
-    .btn.secondary{background:rgba(255,255,255,.04)}
+    .btn.wine{
+      background:linear-gradient(135deg, rgba(90,20,32,.98), rgba(58,12,20,.98));
+      border-color:rgba(0,0,0,.10);
+      color:#fff5e6;
+    }
     .btn.full{width:100%}
 
     .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .chip{
       font-size:13px;
       color:var(--muted);
-      border:1px solid rgba(214,177,94,.18);
+      border:1px solid rgba(176,138,42,.22);
       padding:6px 10px;border-radius:999px;
-      background:rgba(255,255,255,.02);
+      background:rgba(255,255,255,.55);
     }
 
-    /* Panels & sections */
+    /* Cards / panels */
     .panel{
-      border:1px solid rgba(214,177,94,.18);
+      border:1px solid rgba(0,0,0,.10);
       border-radius:18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
-      box-shadow:0 18px 40px rgba(0,0,0,.35);
+      background:var(--card);
+      box-shadow:0 18px 38px var(--shadow);
       overflow:hidden;
     }
     .panel-head{
@@ -134,64 +168,73 @@
       font-family:Cinzel, serif;
       letter-spacing:.06em;
       text-transform:uppercase;
-      border-bottom:1px solid rgba(255,255,255,.06);
-      background:rgba(0,0,0,.20);
+      border-bottom:1px solid rgba(0,0,0,.08);
+      background:linear-gradient(180deg, rgba(176,138,42,.10), rgba(255,255,255,.35));
     }
     .panel-body{padding:14px}
 
-    .stat{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.10)}
+    .stat{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.16)}
     .stat:last-child{border-bottom:none}
     .label{color:var(--muted)}
     .value{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
 
-    .section{padding:8px 0 22px}
+    .section{padding:10px 0 22px}
     .section h2{
       font-family:Cinzel, serif;
       letter-spacing:.06em;
       text-transform:uppercase;
       margin:0 0 10px;
       font-size:22px;
+      color:#17130c;
     }
-    .section p{margin:0 0 10px;color:var(--muted)}
+    .section p{margin:0 0 10px;color:var(--muted);font-size:16px}
+
     .divider{
       height:1px;
-      background:linear-gradient(90deg, transparent, rgba(214,177,94,.35), transparent);
+      background:linear-gradient(90deg, transparent, rgba(176,138,42,.42), transparent);
       margin:18px 0;
     }
 
-    /* Logo block */
-    .logo-wrap{
-      display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-      margin:16px 0 0;
-    }
+    /* Logo */
     .logo{
       width:100%;
-      max-width:520px;
       height:auto;
-      border-radius:14px;
-      border:1px solid rgba(214,177,94,.18);
-      box-shadow:0 22px 55px rgba(0,0,0,.45);
-      background:rgba(0,0,0,.25);
-    }
-    .logo-note{
-      color:var(--muted);
-      font-size:13px;
-      max-width:46ch;
+      border-radius:16px;
+      border:1px solid rgba(0,0,0,.10);
+      box-shadow:0 22px 55px rgba(15,12,8,.24);
+      background:rgba(255,255,255,.40);
     }
 
-    /* Footer */
+    /* Founder block */
+    .quote{
+      border-left:4px solid rgba(176,138,42,.55);
+      padding:14px 16px;
+      background:rgba(255,255,255,.58);
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.10);
+      box-shadow:0 18px 38px var(--shadow);
+      color:#3f3a31;
+    }
+    .quote p{margin:0 0 10px;color:#3f3a31}
+    .quote p:last-child{margin-bottom:0}
+
+    .bullets{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:#3f3a31;
+    }
+
     footer{
-      border-top:1px solid rgba(255,255,255,.06);
-      color:rgba(193,184,159,.9);
+      border-top:1px solid rgba(0,0,0,.10);
+      color:rgba(75,70,61,.9);
       font-size:13px;
       padding:18px 18px 28px;
       text-align:center;
     }
 
-    /* Responsive */
-    @media (max-width: 900px){
+    @media (max-width: 920px){
       .hero-grid{grid-template-columns:1fr}
-      .hero h1{font-size:36px}
+      h1{font-size:36px}
     }
   </style>
 </head>
@@ -203,14 +246,14 @@
         <div class="sigil">II</div>
         <div>
           <div class="brand-title">Invicta Imperium</div>
-          <div class="brand-sub">Roman sandbox MUD • player-driven • in-character first</div>
+          <div class="brand-sub">marble & gold • Roman sandbox MUD • in-character first</div>
         </div>
       </div>
       <div class="nav">
         <a href="#play">How to Play</a>
-        <a href="#status">Status</a>
+        <a href="#founder">From the Founder</a>
         <a href="#roadmap">Roadmap</a>
-        <a href="#community">Community</a>
+        <a href="#community">Discord</a>
       </div>
     </div>
   </div>
@@ -218,37 +261,34 @@
   <div class="wrap hero">
     <div class="hero-grid">
       <div>
-        <h1>Carve your power into an unconquered empire.</h1>
+        <h1>Build your name in the Empire.</h1>
         <p class="lead">
-          Invicta Imperium is a Roman-inspired sandbox MUD where the world moves because players move it —
-          through politics, trade, violence, craftsmanship, and reputation. Systems support roleplay; they don’t replace it.
+          Invicta Imperium is a Roman-inspired sandbox MUD where players shape the world through ambition:
+          trade, violence, politics, craft, reputation — and the consequences that follow.
         </p>
 
         <div class="cta">
           <a class="btn primary" href="#play">Play Now</a>
-          <!-- Replace the # with your donation link later -->
-          <a class="btn secondary" href="#" id="donate">Donate (coming soon)</a>
+          <a class="btn wine" href="https://discord.gg/3JkAaW4SQ3" target="_blank" rel="noopener">Join Discord</a>
+          <!-- Replace this later with your donation link -->
+          <a class="btn" href="#" title="Add your donation link later">Donate (coming soon)</a>
         </div>
 
         <div class="chips">
-          <span class="chip">⚔️ Consequential combat</span>
-          <span class="chip">🛠️ Crafting depth</span>
-          <span class="chip">🏛️ Social pressure</span>
-          <span class="chip">🩺 Wounds & medicine</span>
-          <span class="chip">🕯️ Persistent time</span>
+          <span class="chip">⚔️ consequential combat</span>
+          <span class="chip">🛠️ crafting depth</span>
+          <span class="chip">🏛️ social pressure</span>
+          <span class="chip">🩺 wounds & medicine</span>
+          <span class="chip">🕯️ persistent time</span>
         </div>
 
-        <div class="logo-wrap">
-          <!-- THIS is how you include the logo -->
-          <img class="logo" src="assets/logo.png" alt="Invicta Imperium logo" />
-          <div class="logo-note">
-            If this image doesn’t show, the file path is wrong.
-            It must be exactly <b>assets/logo.png</b> (case-sensitive).
-          </div>
-        </div>
+        <div class="divider"></div>
+
+        <!-- Logo -->
+        <img class="logo" src="assets/logo.png" alt="Invicta Imperium logo" />
       </div>
 
-      <div class="panel" id="status">
+      <div class="panel">
         <div class="panel-head">Connection</div>
         <div class="panel-body">
           <div class="stat">
@@ -266,9 +306,9 @@
 
           <div class="divider"></div>
 
-          <a class="btn full secondary" href="https://www.mudlet.org" target="_blank" rel="noopener">Get Mudlet</a>
+          <a class="btn full" href="https://www.mudlet.org" target="_blank" rel="noopener">Download Mudlet</a>
           <div style="height:10px"></div>
-          <a class="btn full secondary" href="https://www.gammon.com.au/mushclient" target="_blank" rel="noopener">Get MUSHclient</a>
+          <a class="btn full" href="https://www.gammon.com.au/mushclient" target="_blank" rel="noopener">Download MUSHclient</a>
         </div>
       </div>
     </div>
@@ -277,24 +317,56 @@
 
     <div class="section" id="play">
       <h2>How to Play</h2>
-      <p>Install a MUD client, then connect using the host and port above. You’ll create a character in-game.</p>
-      <p><b>Tip:</b> In-game, type <code>help</code> if you’re unsure what to do next.</p>
+      <p>
+        Install a MUD client, then connect using the host and port above. Create a character in-game and step into the world.
+      </p>
+      <p>
+        In-game, start with <code>help</code>. If you hit a wall, the Discord is there to get you unstuck.
+      </p>
+    </div>
+
+    <div class="section" id="founder">
+      <h2>From the Founder</h2>
+      <div class="quote">
+        <p>
+          I've been playing MUDs for the better part of 25 years. In that time, I've seen many systems and many things that I feel would be good in a MUD and have always wanted to build a MUD that is a living, breathing world you can play in alone or with others. Invicta Imperium is the culmination of my time in the MUD world. I hope to garner a community that will help me grow my vision from something that I've only dreamed of into a reality.
+        </p>
+        <p>
+          I want to create a world that allows players near-complete agency. GM-run events are going to happen to help the players' story along, not the GM's story.
+        </p>
+
+        <ul class="bullets">
+          <li>You want to be a lanista? Buy a ludus.</li>
+          <li>You want to be a gladiator? Join a ludus.</li>
+          <li>You want to be a legionary? Join the legion.</li>
+          <li>Shop owner? Buy a shop, build your stock, start selling.</li>
+        </ul>
+
+        <p style="margin-top:10px">
+          With enough players, I can put players into nearly every role, with systems to enhance and back up their roleplay, not replace and definitely (hopefully) not to limit it.
+        </p>
+        <p>
+          So please, join me in creating this world and hopefully you find yourself a new home to MUD in, grab some friends, new or old, and try to ascend the social ranks. Who knows, maybe you'll be a senator come the next Civic Interlude?
+        </p>
+      </div>
     </div>
 
     <div class="section" id="roadmap">
       <h2>Roadmap</h2>
       <p><b>Live major systems:</b> Combat, basic crafting, medicine/wounds, calendar/time.</p>
-      <p><b>Next:</b> Map expansion and more space for social/economic play.</p>
-      <p><b>Then:</b> Society structure (status/roles/factions), expanded crafting depth, expanded combat depth, expanded medicine/wounds.</p>
-      <p style="font-size:13px;color:rgba(193,184,159,.92)">
+      <p><b>Next:</b> Map expansion (more districts, places to live/work/gather, and room for society to breathe).</p>
+      <p><b>After:</b> Society structure (status/roles/factions), expanded crafting, expanded combat, expanded medicine/wounds.</p>
+      <p style="font-size:13px;color:rgba(75,70,61,.95)">
         Direction, not deadlines. Systems evolve through play.
       </p>
     </div>
 
     <div class="section" id="community">
-      <h2>Community</h2>
+      <h2>Discord</h2>
       <p>Discord is out-of-character support and coordination. Roleplay and consequences happen in-game.</p>
-      <p><b>Discord:</b> <em>Add your invite link here when ready.</em></p>
+      <p>
+        <a class="btn wine" href="https://discord.gg/3JkAaW4SQ3" target="_blank" rel="noopener">Join the Invicta Imperium Discord</a>
+      </p>
     </div>
   </div>
 
